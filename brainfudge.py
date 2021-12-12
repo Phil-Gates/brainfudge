@@ -71,10 +71,12 @@ class Interpreter:
             i += 1
 
     def run_input(self) -> None:
+        """Run code from user input."""
         fudge = input()
         self.run(fudge)
 
     def run_file(self, file_name: str) -> None:
+        """Run a file."""
         with open(file_name, "r") as file:
             code = file.read()
         self.run(code)

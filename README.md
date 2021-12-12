@@ -2,12 +2,14 @@
 Run brainf\*ck code with python!
 
 ## Classes ##
->`Interpreter(array_len)`
->> `__init__`: initalize variables
->>>`array_len`: length of memory tape for interpreter
->> `run`: run code directly
->> `run_input`: ask for input then execute
->> `run_file`: run a file
+* `Interpreter(array_len)`: interpret some code.
+    * `__init__(self, array_len: int=30000) -> None`: initialize variables
+        * `array_len`: length of memory tape
+    * `loop(self, code: str) -> Tuple`: loop some code
+    * `run(self, code: str) -> None`: run some code
+    * `run_input(self) -> None`: run code from user input
+    * `run_file(self, file_name: str) -> None`: run a file
+
 
 ## Examples ##
 For `run`:
