@@ -1,6 +1,10 @@
 import re
+import logging
 from typing import Tuple
 
+logger = logging.getLogger(__name__)
+
+logging.basicConfig(level=logging.ERROR)
 
 class Interpreter:
     """A Brainf*ck interpreter."""
@@ -35,7 +39,7 @@ class Interpreter:
             or brack_count != 0
         ):
             # Abort!
-            print("Error: unclosed loop")
+            logger.exception("unclosed loop")
             exit()
         while self.array[self.pointer] != 0:
             # Loop code within loop while cell is not 0

@@ -1,5 +1,5 @@
 # Brainfudge
-Run brainf\*ck code with python!
+Run Brainf\*ck code with python!
 
 ## Classes ##
 * `Interpreter(array_len)`: interpret some code.
