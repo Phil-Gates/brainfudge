@@ -88,3 +88,8 @@ class Interpreter:
         with open(file_name, "r") as file:
             code = file.read()
         self.run(code)
+    
+    def reset(self) -> None:
+        """Reset storage tape and pointer."""
+        self.pointer = 0
+        self.array = [0] * self.array_len

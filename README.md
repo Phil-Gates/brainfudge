@@ -12,6 +12,7 @@ Run Brainf\*ck code with python!
     * `run_input(self) -> None`: run code from user input
     * `run_file(self, file_name: str) -> None`: run a file
         * `file_name`: file to run
+    * `reset(self) -> None`: reset pointer and storage tape
 
 
 ## Examples ##
