@@ -37,3 +37,12 @@ For `run_file`:
 >>> file_name = "example.bf"
 >>> I.run_file(file_name)
 ```
+For `reset`:
+```
+>>> import brainfudge
+>>> I = brainfudge.Interpreter()
+>>> file_name = "exmple.bf"
+>>> I.run_file(file_name)
+>>> I.reset()
+>>> I.run("[->+<>]")
+```
