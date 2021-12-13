@@ -17,7 +17,7 @@ For `run`:
 >>> import brainfudge
 >>> I = brainfudge.Interpreter()
 >>> code = "[->+<]"
->>> I.run(code))
+>>> I.run(code)
 ```
 For `run_input`:
 ```
@@ -30,5 +30,6 @@ For `run_file`:
 ```
 >>> import brainfudge
 >>> I = brainfudge.Interpreter()
->>> I.run_file("example.bf")
+>>> file_name = "example.bf"
+>>> I.run_file(file_name)
 ```
