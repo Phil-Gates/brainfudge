@@ -1,5 +1,6 @@
 import re
 import logging
+import sys
 from typing import Tuple
 
 logger = logging.getLogger(__name__)
@@ -43,7 +44,7 @@ class Interpreter:
         ):
             # Abort!
             logger.exception("unclosed loop")
-            exit()
+            sys.exit()
         while self.array[self.pointer] != 0:
             # Loop code within loop while cell is not 0
             self.run(code[loop_start:loop_end])
