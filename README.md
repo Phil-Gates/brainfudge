@@ -2,13 +2,16 @@
 Run Brainf\*ck code with python!
 
 ## Classes ##
-* `Interpreter(array_len)`: interpret some code.
+* `Interpreter(array_len)`: encapsulate all functions into class
     * `__init__(self, array_len: int=30000) -> None`: initialize variables
         * `array_len`: length of memory tape
     * `loop(self, code: str) -> Tuple`: loop some code
+        * `code`: code to loop; will auto-cut down into the square brackets
     * `run(self, code: str) -> None`: run some code
+        * `code`: code to run
     * `run_input(self) -> None`: run code from user input
     * `run_file(self, file_name: str) -> None`: run a file
+        * `file_name`: file to run
 
 
 ## Examples ##
