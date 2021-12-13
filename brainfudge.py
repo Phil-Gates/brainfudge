@@ -52,7 +52,7 @@ class Interpreter:
         return loop_start, loop_end
 
     def run(self, code: str) -> None:
-        """Interpret some code."""
+        """Run some code."""
         i = 0
         while i < len(code):
             # Parse
