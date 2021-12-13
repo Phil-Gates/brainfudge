@@ -28,7 +28,7 @@ For `run_input`:
 >>> import brainfudge
 >>> I = brainfudge.Interpreter()
 >>> I.run_input()
-[->+<]
+Code: [->+<]
 ```
 For `run_file`:
 ```
