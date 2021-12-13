@@ -7,11 +7,11 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.ERROR)
 
 class Interpreter:
-    """A Brainf*ck interpreter."""
+    """Encapsulate all functions into one class."""
 
     def __init__(self, array_len: int = 30000) -> None:
         """
-        Encapsulate all functions into one class.
+        Initialize variables.
         array_len: determine storage tape length
         """
         self.array_len = array_len
