@@ -45,5 +45,5 @@ For `reset`:
 >>> file_name = "exmple.bf"
 >>> I.run_file(file_name)
 Hello, World!>>> I.reset()
->>> I.run("[->+<>]")
+>>> I.run("[->+<]")
 ```
