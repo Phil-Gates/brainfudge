@@ -1,11 +1,19 @@
 import re
 import logging
 import sys
+import argparse
 from typing import Tuple
 
 logger = logging.getLogger(__name__)
 
 logging.basicConfig(level=logging.ERROR)
+
+parser = argparse.ArgumentParser(description="easy Brainf*ck interpretation")
+parser.add_argument("-r", "--run", type=str, help="code to run")
+parser.add_argument("-i", "--input", action="store_true", help="from input")
+parser.add_argument("-f", "--file", type=str, help="filename to run")
+parser.add_argument("-t", "--tape", type=int, help="length of memory tape")
+args = parser.parse_args()
 
 class Interpreter:
     """Encapsulate all functions into one class."""
@@ -93,3 +101,15 @@ class Interpreter:
         """Reset storage tape and pointer."""
         self.pointer = 0
         self.array = [0] * self.array_len
+
+if __name__ == "__main__":
+    if args.tape:
+        I = Interpreter(args.tape)
+    else:
+        I = Interpreter()
+    if args.run:
+        I.run(args.run)
+    elif args.input:
+        I.run_input()
+    elif args.file:
+        I.run_file(args.file)
