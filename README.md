@@ -36,6 +36,7 @@ For `run_file`:
 >>> I = brainfudge.Interpreter()
 >>> file_name = "example.bf"
 >>> I.run_file(file_name)
+Hello, World!
 ```
 For `reset`:
 ```
@@ -43,6 +44,6 @@ For `reset`:
 >>> I = brainfudge.Interpreter()
 >>> file_name = "exmple.bf"
 >>> I.run_file(file_name)
->>> I.reset()
+Hello, World!>>> I.reset()
 >>> I.run("[->+<>]")
 ```
