@@ -10,7 +10,10 @@ class Interpreter:
     """A Brainf*ck interpreter."""
 
     def __init__(self, array_len: int = 30000) -> None:
-        """Initialize variables."""
+        """
+        Encapsulate all functions into one class.
+        array_len: determine storage tape length
+        """
         self.array_len = array_len
         self.array = [0] * array_len
         self.pointer = 0
