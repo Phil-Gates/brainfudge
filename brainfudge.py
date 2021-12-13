@@ -80,7 +80,7 @@ class Interpreter:
 
     def run_input(self) -> None:
         """Run code from user input."""
-        code = input()
+        code = input("Code: ")
         self.run(code)
 
     def run_file(self, file_name: str) -> None:
