@@ -8,12 +8,26 @@ logger = logging.getLogger(__name__)
 
 logging.basicConfig(level=logging.ERROR)
 
-parser = argparse.ArgumentParser(description="easy Brainf*ck interpretation")
-parser.add_argument("-r", "--run", type=str, help="code to run")
-parser.add_argument("-i", "--input", action="store_true", help="from input")
-parser.add_argument("-f", "--file", type=str, help="filename to run")
-parser.add_argument("-t", "--tape", type=int, help="length of memory tape")
-args = parser.parse_args()
+
+class _ArgumentParser(argparse.ArgumentParser):
+    """Custom error message."""
+
+    def error(self, message):
+        self.print_help()
+        sys.stderr.write(f"\n{message}\n")
+
+
+Parser = _ArgumentParser(description="Easy Brainf*ck interpretation")
+
+
+def _parse_args():
+    """Nicer than doing it at start of code."""
+    Parser.add_argument("-r", "--run", type=str, help="code to run")
+    Parser.add_argument("-i", "--input", action="store_true", help="from input")
+    Parser.add_argument("-f", "--file", type=str, help="filename to run")
+    Parser.add_argument("-t", "--tape", type=int, help="length of memory tape")
+    return Parser.parse_args()
+
 
 class Interpreter:
     """Encapsulate all functions into one class."""
@@ -96,20 +110,25 @@ class Interpreter:
         with open(file_name, "r") as file:
             code = file.read()
         self.run(code)
-    
+
     def reset(self) -> None:
         """Reset storage tape and pointer."""
         self.pointer = 0
         self.array = [0] * self.array_len
 
+
 if __name__ == "__main__":
-    if args.tape:
-        I = Interpreter(args.tape)
+    args = _parse_args()
+    if len(sys.argv) > 1:
+        if args.tape:
+            I = Interpreter(args.tape)
+        else:
+            I = Interpreter()
+        if args.run:
+            I.run(args.run)
+        elif args.input:
+            I.run_input()
+        elif args.file:
+            I.run_file(args.file)
     else:
-        I = Interpreter()
-    if args.run:
-        I.run(args.run)
-    elif args.input:
-        I.run_input()
-    elif args.file:
-        I.run_file(args.file)
+        Parser.error("no flags provided")
