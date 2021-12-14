@@ -102,13 +102,20 @@ class Interpreter:
 
     def run_input(self) -> None:
         """Run code from user input."""
-        code = input("Code: ")
+        try:
+            code = input("Code: ")
+        except (KeyboardInterrupt, EOFError):
+            return
         self.run(code)
 
     def run_file(self, file_name: str) -> None:
         """Run a file."""
-        with open(file_name, "r") as file:
-            code = file.read()
+        try:
+            with open(file_name, "r") as file:
+                code = file.read()
+        except FileNotFoundError:
+            logger.exception(f"file '{file_name}' not found", exc_info=False)
+            return
         self.run(code)
 
     def reset(self) -> None:
