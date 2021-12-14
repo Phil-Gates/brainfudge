@@ -13,6 +13,7 @@ class _ArgumentParser(argparse.ArgumentParser):
     """Custom error message."""
 
     def error(self, message):
+        """Custom error message."""
         self.print_help()
         sys.stderr.write(f"\n{message}\n")
 
@@ -25,7 +26,6 @@ def _parse_args():
     Parser.add_argument("-r", "--run", type=str, help="code to run")
     Parser.add_argument("-i", "--input", action="store_true", help="from input")
     Parser.add_argument("-f", "--file", type=str, help="filename to run")
-    Parser.add_argument("-t", "--tape", type=int, help="length of memory tape")
     return Parser.parse_args()
 
 
@@ -127,10 +127,7 @@ class Interpreter:
 if __name__ == "__main__":
     args = _parse_args()
     if len(sys.argv) > 1:
-        if args.tape:
-            I = Interpreter(args.tape)
-        else:
-            I = Interpreter()
+        I = Interpreter()
         if args.run:
             I.run(args.run)
         elif args.input:
