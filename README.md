@@ -1,6 +1,5 @@
 # Brainfudge #
 Run Brainf\*ck code with python!
-**(Warning: do not use nested loops)**
 
 ## Classes ##
 * `_ArgumentParser(argparse.ArgumentParser)`: sole reason for existence if for custom error message

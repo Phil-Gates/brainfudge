@@ -41,63 +41,60 @@ class Interpreter:
         self.array = [0] * array_len
         self.pointer = 0
 
-    def loop(self, code: str) -> Tuple:
-        """Loop some code."""
-        brack_count = 0
-        loop_starts = [m.start() for m in re.finditer("\[", code)]
-        loop_ends = [m.start() for m in re.finditer("]", code)]
-        # Add one for code slicing.
-        loop_start = loop_starts[0] + 1
-        for i, cmd in enumerate(code):
-            # Algorithm for checking bracket pairs.
-            if cmd == "[":
-                brack_count += 1
-            elif cmd == "]":
-                brack_count -= 1
-                if brack_count == 0:
-                    loop_end = i
-                    break
-        if (
-            # Check for inequalities.
-            len(loop_starts) != len(loop_ends)
-            or loop_starts[-1] > loop_ends[-1]
-            or loop_ends[0] < loop_starts[0]
-            or brack_count != 0
-        ):
-            # Abort!
-            logger.exception("unclosed loop")
-            sys.exit()
-        while self.array[self.pointer] != 0:
-            # Loop code within loop while cell is not 0
-            self.run(code[loop_start:loop_end])
-        # Return values for code slicing
-        return loop_start, loop_end
-
     def run(self, code: str) -> None:
         """Run some code."""
         i = 0
+        brack_count = 0
+        brack_list = []
+        ghost_mode = False
+        first_time = True
         while i < len(code):
             # Parse
-            if code[i] == ">":
-                self.pointer = (self.pointer + 1) % self.array_len
-            elif code[i] == "<":
-                self.pointer = (self.pointer - 1) % self.array_len
-            elif code[i] == "+":
-                self.array[self.pointer] = (self.array[self.pointer] + 1) % 256
-            elif code[i] == "-":
-                self.array[self.pointer] = (self.array[self.pointer] - 1) % 256
-            elif code[i] == ".":
-                print(chr(self.array[self.pointer]), end="")
-            elif code[i] == ",":
-                self.array[self.pointer] = int(input(f"{self.pointer}>")) % 256
-            elif code[i] == "[":
-                looped = self.loop(code)
-                loop_start = looped[0]
-                loop_end = looped[1]
-                # Remove loop from code
-                code = code[: loop_start - 1] + code[loop_end + 1 :]
-                # Go back a step so no code is missed
-                i -= 1
+            if not ghost_mode:
+                if code[i] == ">":
+                    self.pointer = (self.pointer + 1) % self.array_len
+                elif code[i] == "<":
+                    self.pointer = (self.pointer - 1) % self.array_len
+                elif code[i] == "+":
+                    self.array[self.pointer] = (self.array[self.pointer] + 1) % 256
+                elif code[i] == "-":
+                    self.array[self.pointer] = (self.array[self.pointer] - 1) % 256
+                elif code[i] == ".":
+                    print(chr(self.array[self.pointer]), end="")
+                elif code[i] == ",":
+                    self.array[self.pointer] = int(input(f"{self.pointer}>")) % 256
+            if code[i] == "[":
+                if (self.array[self.pointer] != 0) and (not ghost_mode):
+                    brack_list.append(i)
+                    brack_count += 1
+                elif ghost_mode:
+                    brack_count += 1
+                else:
+                    brack_count += 1
+                    ghost_mode = True
+                    ghost_count = brack_count
+            elif code[i] == "]":
+                try:
+                    if self.array[self.pointer] != 0:
+                        if first_time:
+                            brack_count -= 1
+                            first_time = False
+                        i = brack_list[brack_count]  # incremented later
+                        if brack_count < 0:
+                            raise IndexError()
+                    elif ghost_mode:
+                        if brack_count == ghost_count:
+                            ghost_mode = False
+                        brack_count -= 1
+                    elif self.array[self.pointer] == 0:
+                        first_time = True
+                        brack_list.pop()
+                except IndexError:
+                    logger.exception(
+                        f"mismatched brackets at char {i}",
+                        exc_info=False,
+                    )
+                    return
             i += 1
 
     def run_input(self) -> None:
